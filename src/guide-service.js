@@ -23,15 +23,22 @@ const guideService = {
     },
 
     editGuide(knex, id, newGuide) {
-      return knex("guides")
+      console.log(
+      knex("guides")
       .where({id:id})
+      .update(newGuide)
+      .returning("*")
+      .toString()
+      )
+      return knex("guides")
+      .where({id: id})
       .update(newGuide)
       .returning("*");
     },    
   
     deleteGuide(knex, id) {
       return knex("guides")
-      .where({ id: 'id' })
+      .where({ id: id})
       .delete();
     },
   };

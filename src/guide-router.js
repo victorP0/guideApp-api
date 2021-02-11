@@ -27,7 +27,7 @@ guideRouter
       .then((guides) => {
         res.json(guides);
       })
-      .catch(e => console.log(e))
+      .catch((e) => console.log(e));
   })
   .post(bodyParser, (req, res, next) => {
     const { title, text, author, url, key } = req.body;
@@ -41,58 +41,47 @@ guideRouter
       text,
       author,
       url,
-      key
+      key,
     };
 
     guideService
       .insertGuide(knex, newGuide)
       .then((guide) => {
-        res
-          .status(201)
-          .location(`/${newGuide.id}`)
-          .json(newGuide)
-          .send();
+        res.status(201).location(`/${newGuide.id}`).json(newGuide).send();
+      })
+      .catch(next);
+  });
+
+guideRouter
+  .route("/:id")
+  .patch(bodyParser, (req, res, next) => {
+    const { title, text, author, url } = req.body;
+    const { id } = req.params;
+    console.log(id, title, text, author, url);
+    const newGuide = {
+      id,
+      title,
+      text,
+      author,
+      url,
+    };
+
+    guideService
+      .editGuide(knex, id, newGuide)
+      .then(() => {
+        res.status(201).location(`/${newGuide.id}`).json(newGuide).send();
       })
       .catch(next);
   })
-  ;
+  .delete((req, res, next) => {
+    const { id } = req.params;
 
-  guideRouter.route("/:id")
-  .patch(bodyParser, (req, res, next) => {
-  const { title, text, author, url } = req.body;
-  const { id } = req.params;
-  console.log(id, title, text, author, url)
-  if (!text) {
-    return res.status(400).send("guide content required");
-  }
-  const newGuide = {
-    id,
-    title,
-    text,
-    author,
-    url,
-  };
-
-  guideService
-    .editGuide(knex, id, newGuide)
-    .then(() => {
-      res
-        .status(201)
-        .location(`/${newGuide.id}`)
-        .json(newGuide)
-        .send()
-    })
-    .catch(next);
-})
-.delete((req, res, next) => {
-  const { id } = req.params;
-
-  guideService
-    .deleteGuide(knex, id)
-    .then(() => {
-      res.status(204).send("Deleted").end();
-    })
-    .catch(next);
-});
+    guideService
+      .deleteGuide(knex, id)
+      .then(() => {
+        res.status(204).send("Deleted").end();
+      })
+      .catch(next);
+  });
 
 module.exports = guideRouter;
