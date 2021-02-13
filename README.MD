@@ -1,26 +1,19 @@
-# Express Boilerplate!
+# Guide App Backend
 
-This is a boilerplate project used for starting new projects!
+This is the backend for the Guide App. 
 
-## Set up
+The frontend can be found at https://github.com/victorP0/GuideApp.
+## API Documentation
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+guide-router.js has 2 routes on the "/" path. The `GET` route is used to fetch the all guides currently in the app. The `POST` route allows the user to publish new guides to the gallery.
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+The "/:id" path has 2 routes. The `PATCH` route is used to edit content in existing guides. The `DELETE` route allows users to delete guides.
 
-## Scripts
+The validate-bearer-token.js file is created and used to ensure only clients with the valid bearer token can acesss and send data to the database.
+## Description
 
-Start the application `npm start`
+This is a guides app that allows Users to write and publish guides on the internet.
 
-Start nodemon for the application `npm run dev`
+## Technologies used
 
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+Node, Express, PostgreSQL, Mocha, Chai, Supertest, Knex.js

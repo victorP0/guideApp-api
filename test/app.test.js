@@ -14,10 +14,11 @@ describe('Get guides', () => {
 
 describe('Post guide', () => {
   it('POST / responds with 201', () => {
+
     return supertest(app)
       .post('/')
       .set({ 'Authorization': `Bearer ${API_TOKEN}` })
-      .query({id: '123', title: 'TITLE_TEST', text: 'TEXT_TEST', author: 'AUTHOR_TEST', url:'', key:''})
+      .send({id: '123', title: 'TITLE_TEST', text: 'TEXT_TEST', author: 'AUTHOR_TEST', url:'abc.com', key:'123'})
       .expect(201)
   })
 })
